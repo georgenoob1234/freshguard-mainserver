@@ -1,4 +1,4 @@
-# Brain Service
+# Mainserver
 
 Central orchestration service for a modular fruit detection and defect analysis pipeline.
 
