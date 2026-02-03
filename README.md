@@ -6,7 +6,7 @@ Central orchestration service for a modular fruit detection and defect analysis 
 
 ## Overview
 
-The **Brain** is the single orchestrator in the system. It:
+The **mainserver** is the single orchestrator in the system. It:
 
 1. Monitors weight readings from a scale to detect when fruit is placed or removed.
 2. Triggers image capture and runs detection pipelines when weight stabilizes.
