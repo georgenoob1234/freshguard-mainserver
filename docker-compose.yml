@@ -1,0 +1,54 @@
+# =============================================================================
+# Docker Compose for Brain Service (local development/testing)
+# =============================================================================
+# This file runs ONLY the Brain service. Other microservices (Weight, Camera,
+# FruitDetector, DefectDetector, UI, MainServer) are expected to run separately.
+# =============================================================================
+
+services:
+  brain-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: brain-service
+    ports:
+      - "${SERVICE_PORT:-8000}:${SERVICE_PORT:-8000}"
+    environment:
+      # Service configuration
+      SERVICE_PORT: ${SERVICE_PORT:-8000}
+      APP_ENV: ${APP_ENV:-dev}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+
+      # External service URLs (override these to point to actual services)
+      WEIGHT_SERVICE_URL: ${WEIGHT_SERVICE_URL:-http://host.docker.internal:8100}
+      CAMERA_SERVICE_URL: ${CAMERA_SERVICE_URL:-http://host.docker.internal:8200}
+      FRUIT_DETECTOR_URL: ${FRUIT_DETECTOR_URL:-http://host.docker.internal:8300}
+      DEFECT_DETECTOR_URL: ${DEFECT_DETECTOR_URL:-http://host.docker.internal:8400}
+      UI_SERVICE_URL: ${UI_SERVICE_URL:-http://host.docker.internal:8500}
+      MAIN_SERVER_URL: ${MAIN_SERVER_URL:-http://host.docker.internal:8600}
+
+      # Feature flags
+      ENABLE_WEIGHT_POLLING: ${ENABLE_WEIGHT_POLLING:-true}
+      ENABLE_MAIN_SERVER_PUBLISH: ${ENABLE_MAIN_SERVER_PUBLISH:-false}
+
+      # Thresholds (optional overrides)
+      MIN_FRUIT_WEIGHT: ${MIN_FRUIT_WEIGHT:-30.0}
+      SIGNIFICANT_DELTA: ${SIGNIFICANT_DELTA:-20.0}
+      WEIGHT_NOISE_EPSILON: ${WEIGHT_NOISE_EPSILON:-5.0}
+      STABLE_WINDOW_MS: ${STABLE_WINDOW_MS:-400}
+      MIN_SCAN_INTERVAL_MS: ${MIN_SCAN_INTERVAL_MS:-2000}
+      WEIGHT_POLL_INTERVAL_MS: ${WEIGHT_POLL_INTERVAL_MS:-150}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthz')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+    networks:
+      - fruitstack
+
+networks:
+  fruitstack:
+    driver: bridge
+
