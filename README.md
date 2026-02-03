@@ -48,7 +48,7 @@ Environment variables (or `.env` file):
 | `FRUIT_DETECTOR_URL`   | `http://localhost:8300`  | Fruit detector base URL              |
 | `DEFECT_DETECTOR_URL`  | `http://localhost:8400`  | Defect detector base URL             |
 | `UI_SERVICE_URL`       | `http://localhost:8500`  | UI service base URL                  |
-| `MAIN_SERVER_URL`      | `http://localhost:8600`  | Main server base URL                 |
+| `MAIN_SERVER_URL <--unused`      | `http://localhost:8600`  | Main server base URL                 |
 | `MIN_FRUIT_WEIGHT`     | `30.0`                   | Minimum weight (g) to trigger scan   |
 | `SIGNIFICANT_DELTA`    | `20.0`                   | Weight change (g) to re-trigger scan |
 | `WEIGHT_NOISE_EPSILON` | `5.0`                    | Max jitter (g) for stability check   |
