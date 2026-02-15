@@ -1,3 +1,7 @@
+DEPRECATED, Go to mainserverv2:
+https://github.com/georgenoob1234/freshguard-mainserverv2
+
+
 # Mainserver
 
 Central orchestration service for a modular fruit detection and defect analysis pipeline.
